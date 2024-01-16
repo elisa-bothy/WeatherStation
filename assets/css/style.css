@@ -1,0 +1,73 @@
+:root{
+    --color-text:#000;
+    --color-background:#76899E;
+    --color-background-nav-click:#8AA8D6;
+    --color-background-nav: #76899E;
+}
+
+body{
+    min-height: 200vh;
+}
+
+header{
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.7s;
+    position: fixed;
+    padding: 40px;
+}
+
+.header-js{
+    padding: 5px 100px;
+    background-color: var(--color-text);
+}
+
+.logo{
+    text-decoration: 0;
+    font-weight: bold;
+    
+}
+
+header ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header ul li{
+    position: relative;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header ul li a {
+    margin: 0 25px;
+    text-decoration: 0;
+    color: var(--color-text)
+}
+
+header ul li a :link{color:var(--color-text) ;text-decoration: none;}
+header ul li a :visited{text-decoration: none;color: var(--color-text);}
+header ul li a :active{color: var(--color-text);}
+header ul li a :hover{color: var(--color-text);}
+
+.container{
+    height: 100vh;
+    background: linear-gradient(var(--color-background), transparent),url("../photos/le-pont-dans-la-tourmente.jpg");
+    background-position: center;
+}
+
+.header-js a{
+    color: var(--color-background);
+    font-weight: bold;
+}
+
+.header a :link{color:var(--color-background) ;text-decoration: none;}
+header a :visited{text-decoration: none;color: var(--color-background);}
+.header a :active{color: var(--color-background);}
+.header a :hover{color: var(--color-background);}
