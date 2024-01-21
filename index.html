@@ -6,6 +6,7 @@
     <title>Toulouse Météo</title>
     <link rel="shortcut icon" href="assets/photos/icons8-sun-behind-small-cloud-48.png">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header id="nav">
@@ -16,9 +17,21 @@
             <li id="by-After-Tomorrow"><a href="#After-Tomorrow">Après-demain</a></li>
             <li id="by-Contact"><a href="#Contact">Contact</a></li>
         </ul>
-        <div id="today-info"></div>  
+        <div id="today-info">
+            <p id="heure" class="text-bold"></p>
+            <img id="saint1" src="" alt="">
+            <p id="p-saint1"></p>
+            <img id="saint2" src="" alt="">
+            <p id="p-saint2"></p>
+            <img id="sunrise" src="assets/photos/icons8-sunrise-100.png" alt="Le lever du soleil">
+            <p id="p-sunrise"></p>
+            <img id="sunset" src="assets/photos/icons8-sunset-100.png" alt="Le coucher du soleil">
+            <p id="p-sunset"></p>
+        </div>  
     </header>
-    <div class="container" id="container"></div>
-    <script src="assets/js/meteo.js"></script>
+    <div class="container" id="container">
+        
+    </div>
+    <script src="assets/js/meteo.js"></script> 
 </body>
 </html>

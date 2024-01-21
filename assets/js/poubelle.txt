@@ -1,0 +1,417 @@
+const inputVille = document.getElementById("submit-ville");
+    inputVille.addEventListener("click", ()=>{
+        villechoose = select.value;
+        console.log(villechoose);
+        uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
+        fetch(uri)
+        .then(resp => {
+            if (resp.ok){
+                return resp.json();
+            }
+            else{
+                throw new Error("Données non collectées");
+            }
+        })
+        .then(obj => {
+            nomVille = obj.city_info.name;
+            longday1 = obj.fcst_day_1.day_long;
+            date1 = obj.fcst_day_1.date;
+            img1H0 = obj.fcst_day_1.hourly_data["0H00"].ICON;
+            temp1H0 = obj.fcst_day_1.hourly_data["0H00"].TMP2m;
+            img1H1 = obj.fcst_day_1.hourly_data["1H00"].ICON;
+            temp1H1 = obj.fcst_day_1.hourly_data["1H00"].TMP2m;
+            img1H2 = obj.fcst_day_1.hourly_data["2H00"].ICON;
+            temp1H2 = obj.fcst_day_1.hourly_data["2H00"].TMP2m;
+            img1H3 = obj.fcst_day_1.hourly_data["3H00"].ICON;
+            temp1H3 = obj.fcst_day_1.hourly_data["3H00"].TMP2m;
+            img1H4 = obj.fcst_day_1.hourly_data["4H00"].ICON;
+            temp1H4 = obj.fcst_day_1.hourly_data["4H00"].TMP2m;
+            img1H5 = obj.fcst_day_1.hourly_data["5H00"].ICON;
+            temp1H5 = obj.fcst_day_1.hourly_data["5H00"].TMP2m;
+            img1H6 = obj.fcst_day_1.hourly_data["6H00"].ICON;
+            temp1H6 = obj.fcst_day_1.hourly_data["6H00"].TMP2m;
+            img1H7 = obj.fcst_day_1.hourly_data["7H00"].ICON;
+            temp1H7 = obj.fcst_day_1.hourly_data["7H00"].TMP2m;
+            img1H8 = obj.fcst_day_1.hourly_data["8H00"].ICON;
+            temp1H8 = obj.fcst_day_1.hourly_data["8H00"].TMP2m;
+            img1H9 = obj.fcst_day_1.hourly_data["9H00"].ICON;
+            temp1H9 = obj.fcst_day_1.hourly_data["9H00"].TMP2m;
+            img1H10 = obj.fcst_day_1.hourly_data["10H00"].ICON;
+            temp1H10 = obj.fcst_day_1.hourly_data["10H00"].TMP2m;
+            img1H11 = obj.fcst_day_1.hourly_data["11H00"].ICON;
+            temp1H11 = obj.fcst_day_1.hourly_data["11H00"].TMP2m;
+            img1H12 = obj.fcst_day_1.hourly_data["12H00"].ICON;
+            temp1H12 =obj.fcst_day_1.hourly_data["12H00"].TMP2m;
+            img1H13 = obj.fcst_day_1.hourly_data["13H00"].ICON;
+            temp1H13 = obj.fcst_day_1.hourly_data["13H00"].TMP2m;
+            img1H14 = obj.fcst_day_1.hourly_data["14H00"].ICON;
+            temp1H14 = obj.fcst_day_1.hourly_data["14H00"].TMP2m;
+            img1H15 = obj.fcst_day_1.hourly_data["15H00"].ICON;
+            temp1H15 = obj.fcst_day_1.hourly_data["15H00"].TMP2m;
+            img1H16 = obj.fcst_day_1.hourly_data["16H00"].ICON;
+            temp1H16 = obj.fcst_day_1.hourly_data["16H00"].TMP2m;
+            img1H17 = obj.fcst_day_1.hourly_data["17H00"].ICON;
+            temp1H17 = obj.fcst_day_1.hourly_data["17H00"].TMP2m;
+            img1H18 = obj.fcst_day_1.hourly_data["18H00"].ICON;
+            temp1H18 = obj.fcst_day_1.hourly_data["18H00"].TMP2m;
+            img1H19 = obj.fcst_day_1.hourly_data["19H00"].ICON;
+            temp1H19 = obj.fcst_day_1.hourly_data["19H00"].TMP2m;
+            img1H20 = obj.fcst_day_1.hourly_data["20H00"].ICON;
+            temp1H20 = obj.fcst_day_1.hourly_data["20H00"].TMP2m;
+            img1H21 = obj.fcst_day_1.hourly_data["21H00"].ICON;
+            temp1H21 = obj.fcst_day_1.hourly_data["21H00"].TMP2m;
+            img1H22 = obj.fcst_day_1.hourly_data["22H00"].ICON;
+            temp1H22 = obj.fcst_day_1.hourly_data["22H00"].TMP2m;
+            longday2 = obj.fcst_day_2.day_long;
+            date2 = obj.fcst_day_2.date;
+            img2H0 = obj.fcst_day_2.hourly_data["0H00"].ICON;
+            temp2H0 = obj.fcst_day_2.hourly_data["0H00"].TMP2m;
+            img2H1 = obj.fcst_day_2.hourly_data["1H00"].ICON;
+            temp2H1 = obj.fcst_day_2.hourly_data["1H00"].TMP2m;
+            img2H2 = obj.fcst_day_2.hourly_data["2H00"].ICON;
+            temp2H2 = obj.fcst_day_2.hourly_data["2H00"].TMP2m;
+            img2H3 = obj.fcst_day_2.hourly_data["3H00"].ICON;
+            temp2H3 = obj.fcst_day_2.hourly_data["3H00"].TMP2m;
+            img2H4 = obj.fcst_day_2.hourly_data["4H00"].ICON;
+            temp2H4 = obj.fcst_day_2.hourly_data["4H00"].TMP2m;
+            img2H5 = obj.fcst_day_2.hourly_data["5H00"].ICON;
+            temp2H5 = obj.fcst_day_2.hourly_data["5H00"].TMP2m;
+            img2H6 = obj.fcst_day_2.hourly_data["6H00"].ICON;
+            temp2H6 = obj.fcst_day_2.hourly_data["6H00"].TMP2m;
+            img2H7 = obj.fcst_day_2.hourly_data["7H00"].ICON;
+            temp2H7 = obj.fcst_day_2.hourly_data["7H00"].TMP2m;
+            img2H8 = obj.fcst_day_2.hourly_data["8H00"].ICON;
+            temp2H8 = obj.fcst_day_2.hourly_data["8H00"].TMP2m;
+            img2H9 = obj.fcst_day_2.hourly_data["9H00"].ICON;
+            temp2H9 = obj.fcst_day_2.hourly_data["9H00"].TMP2m;
+            img2H10 = obj.fcst_day_2.hourly_data["10H00"].ICON;
+            temp2H10 = obj.fcst_day_2.hourly_data["10H00"].TMP2m;
+            img2H11 = obj.fcst_day_2.hourly_data["11H00"].ICON;
+            temp2H11 = obj.fcst_day_2.hourly_data["11H00"].TMP2m;
+            img2H12 = obj.fcst_day_2.hourly_data["12H00"].ICON;
+            temp2H12 = obj.fcst_day_2.hourly_data["12H00"].TMP2m;
+            img2H13 = obj.fcst_day_2.hourly_data["13H00"].ICON;
+            temp2H13 = obj.fcst_day_2.hourly_data["13H00"].TMP2m;
+            img2H14 = obj.fcst_day_2.hourly_data["14H00"].ICON;
+            temp2H14 = obj.fcst_day_2.hourly_data["14H00"].TMP2m;
+            img2H15 = obj.fcst_day_2.hourly_data["15H00"].ICON;
+            temp2H15 = obj.fcst_day_2.hourly_data["15H00"].TMP2m;
+            img2H16 = obj.fcst_day_2.hourly_data["16H00"].ICON;
+            temp2H16 = obj.fcst_day_2.hourly_data["16H00"].TMP2m;
+            img2H17 = obj.fcst_day_2.hourly_data["17H00"].ICON;
+            temp2H17 = obj.fcst_day_2.hourly_data["17H00"].TMP2m;
+            img2H18 = obj.fcst_day_2.hourly_data["18H00"].ICON;
+            temp2H18 = obj.fcst_day_2.hourly_data["18H00"].TMP2m;
+            img2H19 = obj.fcst_day_2.hourly_data["19H00"].ICON;
+            temp2H19 = obj.fcst_day_2.hourly_data["19H00"].TMP2m;
+            img2H20 = obj.fcst_day_2.hourly_data["20H00"].ICON;
+            temp2H20 = obj.fcst_day_2.hourly_data["20H00"].TMP2m;
+            img2H21 = obj.fcst_day_2.hourly_data["21H00"].ICON;
+            temp2H21 = obj.fcst_day_2.hourly_data["21H00"].TMP2m;
+            img2H22 = obj.fcst_day_2.hourly_data["22H00"].ICON;
+            temp2H22 = obj.fcst_day_2.hourly_data["22H00"].TMP2m;
+            longday0 = obj.fcst_day_0.day_long;
+            date0 = obj.fcst_day_0.date;
+            img0H0 = obj.fcst_day_0.hourly_data["0H00"].ICON;
+            temp0H0 = obj.fcst_day_0.hourly_data["0H00"].TMP2m;
+            img0H1 = obj.fcst_day_0.hourly_data["1H00"].ICON;
+            temp0H1 = obj.fcst_day_0.hourly_data["1H00"].TMP2m;
+            img0H2 = obj.fcst_day_0.hourly_data["2H00"].ICON;
+            temp0H2 = obj.fcst_day_0.hourly_data["2H00"].TMP2m;
+            img0H3 = obj.fcst_day_0.hourly_data["3H00"].ICON;
+            temp0H3 = obj.fcst_day_0.hourly_data["3H00"].TMP2m;
+            img0H4 = obj.fcst_day_0.hourly_data["4H00"].ICON;
+            temp0H4 = obj.fcst_day_0.hourly_data["4H00"].TMP2m;
+            img0H5 = obj.fcst_day_0.hourly_data["5H00"].ICON;
+            temp0H5 = obj.fcst_day_0.hourly_data["5H00"].TMP2m;
+            img0H6 = obj.fcst_day_0.hourly_data["6H00"].ICON;
+            temp0H6 = obj.fcst_day_0.hourly_data["6H00"].TMP2m;
+            img0H7 = obj.fcst_day_0.hourly_data["7H00"].ICON;
+            temp0H7 = obj.fcst_day_0.hourly_data["7H00"].TMP2m;
+            img0H8 = obj.fcst_day_0.hourly_data["8H00"].ICON;
+            temp0H8 = obj.fcst_day_0.hourly_data["8H00"].TMP2m;
+            img0H9 = obj.fcst_day_0.hourly_data["9H00"].ICON;
+            temp0H9 = obj.fcst_day_0.hourly_data["9H00"].TMP2m;
+            img0H10 = obj.fcst_day_0.hourly_data["10H00"].ICON;
+            temp0H10 = obj.fcst_day_0.hourly_data["10H00"].TMP2m;
+            img0H11 = obj.fcst_day_0.hourly_data["11H00"].ICON;
+            temp0H11 = obj.fcst_day_0.hourly_data["11H00"].TMP2m;
+            img0H12 = obj.fcst_day_0.hourly_data["12H00"].ICON;
+            temp0H12 = obj.fcst_day_0.hourly_data["12H00"].TMP2m;
+            img0H13 = obj.fcst_day_0.hourly_data["13H00"].ICON;
+            temp0H13 = obj.fcst_day_0.hourly_data["13H00"].TMP2m;
+            img0H14 = obj.fcst_day_0.hourly_data["14H00"].ICON;
+            temp0H14 = obj.fcst_day_0.hourly_data["14H00"].TMP2m;
+            img0H15 = obj.fcst_day_0.hourly_data["15H00"].ICON;
+            temp0H15 = obj.fcst_day_0.hourly_data["15H00"].TMP2m;
+            img0H16 = obj.fcst_day_0.hourly_data["16H00"].ICON;
+            temp0H16 = obj.fcst_day_0.hourly_data["16H00"].TMP2m;
+            img0H17 = obj.fcst_day_0.hourly_data["17H00"].ICON;
+            temp0H17 = obj.fcst_day_0.hourly_data["17H00"].TMP2m;
+            img0H18 = obj.fcst_day_0.hourly_data["18H00"].ICON;
+            temp0H18 = obj.fcst_day_0.hourly_data["18H00"].TMP2m;
+            img0H19 = obj.fcst_day_0.hourly_data["19H00"].ICON;
+            temp0H19 = obj.fcst_day_0.hourly_data["19H00"].TMP2m;
+            img0H20 = obj.fcst_day_0.hourly_data["20H00"].ICON;
+            temp0H20 = obj.fcst_day_0.hourly_data["20H00"].TMP2m;
+            img0H21 = obj.fcst_day_0.hourly_data["21H00"].ICON;
+            temp0H21 = obj.fcst_day_0.hourly_data["21H00"].TMP2m;
+            img0H22 = obj.fcst_day_0.hourly_data["22H00"].ICON;
+            temp0H22 = obj.fcst_day_0.hourly_data["22H00"].TMP2m;
+        })
+        .catch(err => {
+            console.error(err);
+        }) 
+    })
+
+
+
+
+
+    img1H0 = obj.fcst_day_1.hourly_data["0H00"].ICON;
+            temp1H0 = obj.fcst_day_1.hourly_data["0H00"].TMP2m;
+            img1H1 = obj.fcst_day_1.hourly_data["1H00"].ICON;
+            temp1H1 = obj.fcst_day_1.hourly_data["1H00"].TMP2m;
+            img1H2 = obj.fcst_day_1.hourly_data["2H00"].ICON;
+            temp1H2 = obj.fcst_day_1.hourly_data["2H00"].TMP2m;
+            img1H3 = obj.fcst_day_1.hourly_data["3H00"].ICON;
+            temp1H3 = obj.fcst_day_1.hourly_data["3H00"].TMP2m;
+            img1H4 = obj.fcst_day_1.hourly_data["4H00"].ICON;
+            temp1H4 = obj.fcst_day_1.hourly_data["4H00"].TMP2m;
+            img1H5 = obj.fcst_day_1.hourly_data["5H00"].ICON;
+            temp1H5 = obj.fcst_day_1.hourly_data["5H00"].TMP2m;
+            img1H6 = obj.fcst_day_1.hourly_data["6H00"].ICON;
+            temp1H6 = obj.fcst_day_1.hourly_data["6H00"].TMP2m;
+            img1H7 = obj.fcst_day_1.hourly_data["7H00"].ICON;
+            temp1H7 = obj.fcst_day_1.hourly_data["7H00"].TMP2m;
+            img1H8 = obj.fcst_day_1.hourly_data["8H00"].ICON;
+            temp1H8 = obj.fcst_day_1.hourly_data["8H00"].TMP2m;
+            img1H9 = obj.fcst_day_1.hourly_data["9H00"].ICON;
+            temp1H9 = obj.fcst_day_1.hourly_data["9H00"].TMP2m;
+            img1H10 = obj.fcst_day_1.hourly_data["10H00"].ICON;
+            temp1H10 = obj.fcst_day_1.hourly_data["10H00"].TMP2m;
+            img1H11 = obj.fcst_day_1.hourly_data["11H00"].ICON;
+            temp1H11 = obj.fcst_day_1.hourly_data["11H00"].TMP2m;
+            img1H12 = obj.fcst_day_1.hourly_data["12H00"].ICON;
+            temp1H12 =obj.fcst_day_1.hourly_data["12H00"].TMP2m;
+            img1H13 = obj.fcst_day_1.hourly_data["13H00"].ICON;
+            temp1H13 = obj.fcst_day_1.hourly_data["13H00"].TMP2m;
+            img1H14 = obj.fcst_day_1.hourly_data["14H00"].ICON;
+            temp1H14 = obj.fcst_day_1.hourly_data["14H00"].TMP2m;
+            img1H15 = obj.fcst_day_1.hourly_data["15H00"].ICON;
+            temp1H15 = obj.fcst_day_1.hourly_data["15H00"].TMP2m;
+            img1H16 = obj.fcst_day_1.hourly_data["16H00"].ICON;
+            temp1H16 = obj.fcst_day_1.hourly_data["16H00"].TMP2m;
+            img1H17 = obj.fcst_day_1.hourly_data["17H00"].ICON;
+            temp1H17 = obj.fcst_day_1.hourly_data["17H00"].TMP2m;
+            img1H18 = obj.fcst_day_1.hourly_data["18H00"].ICON;
+            temp1H18 = obj.fcst_day_1.hourly_data["18H00"].TMP2m;
+            img1H19 = obj.fcst_day_1.hourly_data["19H00"].ICON;
+            temp1H19 = obj.fcst_day_1.hourly_data["19H00"].TMP2m;
+            img1H20 = obj.fcst_day_1.hourly_data["20H00"].ICON;
+            temp1H20 = obj.fcst_day_1.hourly_data["20H00"].TMP2m;
+            img1H21 = obj.fcst_day_1.hourly_data["21H00"].ICON;
+            temp1H21 = obj.fcst_day_1.hourly_data["21H00"].TMP2m;
+            img1H22 = obj.fcst_day_1.hourly_data["22H00"].ICON;
+            temp1H22 = obj.fcst_day_1.hourly_data["22H00"].TMP2m;
+            
+            img2H0 = obj.fcst_day_2.hourly_data["0H00"].ICON;
+            temp2H0 = obj.fcst_day_2.hourly_data["0H00"].TMP2m;
+            img2H1 = obj.fcst_day_2.hourly_data["1H00"].ICON;
+            temp2H1 = obj.fcst_day_2.hourly_data["1H00"].TMP2m;
+            img2H2 = obj.fcst_day_2.hourly_data["2H00"].ICON;
+            temp2H2 = obj.fcst_day_2.hourly_data["2H00"].TMP2m;
+            img2H3 = obj.fcst_day_2.hourly_data["3H00"].ICON;
+            temp2H3 = obj.fcst_day_2.hourly_data["3H00"].TMP2m;
+            img2H4 = obj.fcst_day_2.hourly_data["4H00"].ICON;
+            temp2H4 = obj.fcst_day_2.hourly_data["4H00"].TMP2m;
+            img2H5 = obj.fcst_day_2.hourly_data["5H00"].ICON;
+            temp2H5 = obj.fcst_day_2.hourly_data["5H00"].TMP2m;
+            img2H6 = obj.fcst_day_2.hourly_data["6H00"].ICON;
+            temp2H6 = obj.fcst_day_2.hourly_data["6H00"].TMP2m;
+            img2H7 = obj.fcst_day_2.hourly_data["7H00"].ICON;
+            temp2H7 = obj.fcst_day_2.hourly_data["7H00"].TMP2m;
+            img2H8 = obj.fcst_day_2.hourly_data["8H00"].ICON;
+            temp2H8 = obj.fcst_day_2.hourly_data["8H00"].TMP2m;
+            img2H9 = obj.fcst_day_2.hourly_data["9H00"].ICON;
+            temp2H9 = obj.fcst_day_2.hourly_data["9H00"].TMP2m;
+            img2H10 = obj.fcst_day_2.hourly_data["10H00"].ICON;
+            temp2H10 = obj.fcst_day_2.hourly_data["10H00"].TMP2m;
+            img2H11 = obj.fcst_day_2.hourly_data["11H00"].ICON;
+            temp2H11 = obj.fcst_day_2.hourly_data["11H00"].TMP2m;
+            img2H12 = obj.fcst_day_2.hourly_data["12H00"].ICON;
+            temp2H12 = obj.fcst_day_2.hourly_data["12H00"].TMP2m;
+            img2H13 = obj.fcst_day_2.hourly_data["13H00"].ICON;
+            temp2H13 = obj.fcst_day_2.hourly_data["13H00"].TMP2m;
+            img2H14 = obj.fcst_day_2.hourly_data["14H00"].ICON;
+            temp2H14 = obj.fcst_day_2.hourly_data["14H00"].TMP2m;
+            img2H15 = obj.fcst_day_2.hourly_data["15H00"].ICON;
+            temp2H15 = obj.fcst_day_2.hourly_data["15H00"].TMP2m;
+            img2H16 = obj.fcst_day_2.hourly_data["16H00"].ICON;
+            temp2H16 = obj.fcst_day_2.hourly_data["16H00"].TMP2m;
+            img2H17 = obj.fcst_day_2.hourly_data["17H00"].ICON;
+            temp2H17 = obj.fcst_day_2.hourly_data["17H00"].TMP2m;
+            img2H18 = obj.fcst_day_2.hourly_data["18H00"].ICON;
+            temp2H18 = obj.fcst_day_2.hourly_data["18H00"].TMP2m;
+            img2H19 = obj.fcst_day_2.hourly_data["19H00"].ICON;
+            temp2H19 = obj.fcst_day_2.hourly_data["19H00"].TMP2m;
+            img2H20 = obj.fcst_day_2.hourly_data["20H00"].ICON;
+            temp2H20 = obj.fcst_day_2.hourly_data["20H00"].TMP2m;
+            img2H21 = obj.fcst_day_2.hourly_data["21H00"].ICON;
+            temp2H21 = obj.fcst_day_2.hourly_data["21H00"].TMP2m;
+            img2H22 = obj.fcst_day_2.hourly_data["22H00"].ICON;
+            temp2H22 = obj.fcst_day_2.hourly_data["22H00"].TMP2m;
+            
+            img0H0 = obj.fcst_day_0.hourly_data["0H00"].ICON;
+            temp0H0 = obj.fcst_day_0.hourly_data["0H00"].TMP2m;
+            img0H1 = obj.fcst_day_0.hourly_data["1H00"].ICON;
+            temp0H1 = obj.fcst_day_0.hourly_data["1H00"].TMP2m;
+            img0H2 = obj.fcst_day_0.hourly_data["2H00"].ICON;
+            temp0H2 = obj.fcst_day_0.hourly_data["2H00"].TMP2m;
+            img0H3 = obj.fcst_day_0.hourly_data["3H00"].ICON;
+            temp0H3 = obj.fcst_day_0.hourly_data["3H00"].TMP2m;
+            img0H4 = obj.fcst_day_0.hourly_data["4H00"].ICON;
+            temp0H4 = obj.fcst_day_0.hourly_data["4H00"].TMP2m;
+            img0H5 = obj.fcst_day_0.hourly_data["5H00"].ICON;
+            temp0H5 = obj.fcst_day_0.hourly_data["5H00"].TMP2m;
+            img0H6 = obj.fcst_day_0.hourly_data["6H00"].ICON;
+            temp0H6 = obj.fcst_day_0.hourly_data["6H00"].TMP2m;
+            img0H7 = obj.fcst_day_0.hourly_data["7H00"].ICON;
+            temp0H7 = obj.fcst_day_0.hourly_data["7H00"].TMP2m;
+            img0H8 = obj.fcst_day_0.hourly_data["8H00"].ICON;
+            temp0H8 = obj.fcst_day_0.hourly_data["8H00"].TMP2m;
+            img0H9 = obj.fcst_day_0.hourly_data["9H00"].ICON;
+            temp0H9 = obj.fcst_day_0.hourly_data["9H00"].TMP2m;
+            img0H10 = obj.fcst_day_0.hourly_data["10H00"].ICON;
+            temp0H10 = obj.fcst_day_0.hourly_data["10H00"].TMP2m;
+            img0H11 = obj.fcst_day_0.hourly_data["11H00"].ICON;
+            temp0H11 = obj.fcst_day_0.hourly_data["11H00"].TMP2m;
+            img0H12 = obj.fcst_day_0.hourly_data["12H00"].ICON;
+            temp0H12 = obj.fcst_day_0.hourly_data["12H00"].TMP2m;
+            img0H13 = obj.fcst_day_0.hourly_data["13H00"].ICON;
+            temp0H13 = obj.fcst_day_0.hourly_data["13H00"].TMP2m;
+            img0H14 = obj.fcst_day_0.hourly_data["14H00"].ICON;
+            temp0H14 = obj.fcst_day_0.hourly_data["14H00"].TMP2m;
+            img0H15 = obj.fcst_day_0.hourly_data["15H00"].ICON;
+            temp0H15 = obj.fcst_day_0.hourly_data["15H00"].TMP2m;
+            img0H16 = obj.fcst_day_0.hourly_data["16H00"].ICON;
+            temp0H16 = obj.fcst_day_0.hourly_data["16H00"].TMP2m;
+            img0H17 = obj.fcst_day_0.hourly_data["17H00"].ICON;
+            temp0H17 = obj.fcst_day_0.hourly_data["17H00"].TMP2m;
+            img0H18 = obj.fcst_day_0.hourly_data["18H00"].ICON;
+            temp0H18 = obj.fcst_day_0.hourly_data["18H00"].TMP2m;
+            img0H19 = obj.fcst_day_0.hourly_data["19H00"].ICON;
+            temp0H19 = obj.fcst_day_0.hourly_data["19H00"].TMP2m;
+            img0H20 = obj.fcst_day_0.hourly_data["20H00"].ICON;
+            temp0H20 = obj.fcst_day_0.hourly_data["20H00"].TMP2m;
+            img0H21 = obj.fcst_day_0.hourly_data["21H00"].ICON;
+            temp0H21 = obj.fcst_day_0.hourly_data["21H00"].TMP2m;
+            img0H22 = obj.fcst_day_0.hourly_data["22H00"].ICON;
+            temp0H22 = obj.fcst_day_0.hourly_data["22H00"].TMP2m;
+
+
+
+            let img0H0;
+let temp0H0 ;let img0H1;let temp0H1 ;let img0H2;let temp0H2 ;let img0H3 ;let temp0H3 ;let img0H4 ;let temp0H4 ;
+let img0H5 ;let temp0H5 ;let img0H6 ;let temp0H6 ;let img0H7 ;let temp0H7 ;let img0H8 ;let temp0H8 ;let img0H9;
+let temp0H9 ;let img0H10;let temp0H10 ;let img0H11;let temp0H11 ;let img0H12;let temp0H12 ;let img0H13;
+let temp0H13 ;let img0H14;let temp0H14 ;let img0H15;let temp0H15 ;let img0H16;let temp0H16 ;let img0H17;
+let temp0H17 ;let img0H18;let temp0H18 ;let img0H19;let temp0H19 ;let img0H20;let temp0H20 ;let img0H21;
+let temp0H21 ;let img0H22;let temp0H22 ;
+
+let img2H0;let temp2H0 ;let img2H1;let temp2H1 ;let img2H2;let temp2H2 ;let img2H3;let temp2H3 ;
+let img2H4;let temp2H4 ;let img2H5;let temp2H5 ;let img2H6;let temp2H6 ;let img2H7;let temp2H7 ;let img2H8;
+let temp2H8 ;let img2H9;let temp2H9 ;let img2H10 ;let temp2H10 ;let img2H11 ;let temp2H11 ;let img2H12 ;
+let temp2H12 ;let img2H13 ;let temp2H13 ;let img2H14;let temp2H14 ;let img2H15;let temp2H15 ;let img2H16;
+let temp2H16 ;let img2H17;let temp2H17 ;let img2H18;let temp2H18 ;let img2H19;let temp2H19 ;let img2H20;
+let temp2H20 ;let img2H21;let temp2H21 ;let img2H22;let temp2H22 ;
+
+let img1H0 ;let temp1H0 ;let img1H1;let temp1H1 ;let img1H2;
+let temp1H2 ;let img1H3;let temp1H3 ;let img1H4;let temp1H4 ;let img1H5;let temp1H5 ;let img1H6;let temp1H6 ;
+let img1H7;let temp1H7 ;let img1H8;let temp1H8 ;let img1H9;let temp1H9 ;let img1H10 ;let temp1H10 ;let img1H11 ;
+let temp1H11 ;let img1H12 ;let temp1H12 ;let img1H13 ;let temp1H13 ;let img1H14;let temp1H14 ;let img1H15;
+let temp1H15 ;let img1H16;let temp1H16 ;let img1H17;let temp1H17;let img1H18;let temp1H18 ;let img1H19;
+let temp1H19 ;let img1H20;let temp1H20 ;let img1H21;let temp1H21 ;let img1H22 ;let temp1H22 ;
+            
+            
+
+<table>
+        <tr></tr>
+        <tr>
+            `${for(let i=0; i<24; i++){}};`
+            <td>`+ temp0H0 +`</td>
+            <td>`+ temp0H1 +`</td>
+            <td>`+ temp0H2 +`</td>
+            <td>`+ temp0H3 +`</td>
+            <td>`+ temp0H4 +`</td>
+            <td>`+ temp0H5 +`</td>
+            <td>`+ temp0H6 +`</td>
+            <td>`+ temp0H7 +`</td>
+            <td>`+ temp0H8 +`</td>
+            <td>`+ temp0H9 +`</td>
+            <td>`+ temp0H10 +`</td>
+            <td>`+ temp0H11 +`</td>
+            <td>`+ temp0H12 +`</td>
+            <td>`+ temp0H13 +`</td>
+            <td>`+ temp0H14 +`</td>
+            <td>`+ temp0H15 +`</td>
+            <td>`+ temp0H16 +`</td>
+            <td>`+ temp0H17 +`</td>
+            <td>`+ temp0H18 +`</td>
+            <td>`+ temp0H19 +`</td>
+            <td>`+ temp0H20 +`</td>
+            <td>`+ temp0H21 +`</td>
+            <td>`+ temp0H22 +`</td>                      
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><img src="`+ img0H0 +`" alt="Le temps à 0H"></img></td>
+            <td><img src="`+ img0H1 +`" alt="Le temps à 1H"></img></td>
+            <td><img src="`+ img0H2 +`" alt="Le temps à 2H"></img></td>
+            <td><img src="`+ img0H3 +`" alt="Le temps à 3H"></img></td>
+            <td><img src="`+ img0H4 +`" alt="Le temps à 4H"></img></td>
+            <td><img src="`+ img0H5 +`" alt="Le temps à 5H"></img></td>
+            <td><img src="`+ img0H6 +`" alt="Le temps à 6H"></img></td>
+            <td><img src="`+ img0H7 +`" alt="Le temps à 7H"></img></td>
+            <td><img src="`+ img0H8 +`" alt="Le temps à 8H"></img></td>
+            <td><img src="`+ img0H9 +`" alt="Le temps à 9H"></img></td>
+            <td><img src="`+ img0H10 +`" alt="Le temps à 10H"></img></td>
+            <td><img src="`+ img0H11 +`" alt="Le temps à 11H"></img></td>
+            <td><img src="`+ img0H12 +`" alt="Le temps à 12H"></img></td>
+            <td><img src="`+ img0H13 +`" alt="Le temps à 13H"></img></td>
+            <td><img src="`+ img0H14 +`" alt="Le temps à 14H"></img></td>
+            <td><img src="`+ img0H15 +`" alt="Le temps à 15H"></img></td>
+            <td><img src="`+ img0H16 +`" alt="Le temps à 16H"></img></td>
+            <td><img src="`+ img0H17 +`" alt="Le temps à 17H"></img></td>
+            <td><img src="`+ img0H18 +`" alt="Le temps à 18H"></img></td>
+            <td><img src="`+ img0H19 +`" alt="Le temps à 19H"></img></td>
+            <td><img src="`+ img0H20 +`" alt="Le temps à 20H"></img></td>
+            <td><img src="`+ img0H21 +`" alt="Le temps à 21H"></img></td>
+            <td><img src="`+ img0H22 +`" alt="Le temps à 22H"></img></td>
+        </tr>
+        <tr>
+            <td>0H</td>
+            <td>1H</td>
+            <td>2H</td>
+            <td>3H</td>
+            <td>4H</td>
+            <td>5H</td>
+            <td>6H</td>
+            <td>7H</td>
+            <td>8H</td>
+            <td>9H</td>
+            <td>10H</td>
+            <td>11H</td>
+            <td>12H</td>
+            <td>13H</td>
+            <td>14H</td>
+            <td>15H</td>
+            <td>16H</td>
+            <td>17H</td>
+            <td>18H</td>
+            <td>19H</td>
+            <td>20H</td>
+            <td>21H</td>
+            <td>22H</td>
+        </tr>
+    </table>`;

@@ -3,22 +3,197 @@ const li2 = document.getElementById("by-Today");
 const li3 = document.getElementById("by-Tomorrow");
 const li4 = document.getElementById("by-After-Tomorrow");
 const li5 = document.getElementById("by-Contact");
-const todayInfo = document.getElementById("today-info");
 const container = document.getElementById("container");
+let heure; let nomVille ;let longday1 ;let date1 ;let longday2 ;
+let date2 ;let longday0;let date0;let inputVille; let select;
+const iconAvecTempsJ0={};const iconAvecTempsJ1={};const iconAvecTempsJ2={};
+const saintsAvecSexe=[];
 
-window.addEventListener('load', ()=>{
-    li1.classList.add("click-on");
-    li2.classList.remove("click-on");
-    li3.classList.remove("click-on");
-    li4.classList.remove("click-on");
-    li5.classList.remove("click-on");
+window.addEventListener("scroll", function() {
+    const scrollPosition = window.scrollY; // Récupère la position de défilement verticale
+    const header = document.querySelector("header");
+
+    // Ajoute la classe "headerScroll" si la position de défilement est supérieure à 10 pixels
+    if (scrollPosition > 65) {
+        header.classList.add("headerScroll");
+    } else {
+        // Si la position de défilement est inférieure à 10 pixels, retire la classe
+        header.classList.remove("headerScroll");
+    }
+});
+
+function FetchSaints(){
+    const uri2 = "https://nominis.cef.fr/json/nominis.php";     
+    fetch(uri2)
+    .then(resp => {
+        if (resp.ok){
+            return resp.json();
+        }
+        else{
+            throw new Error("Données non collectées");
+        }
+    })
+    .then(obj => {
+        /* les saints */
+        const prenomsMajeurs = obj.response.prenoms.majeurs;
+
+    if (prenomsMajeurs) {
+        const nomsPrenomsMajeurs = Object.keys(prenomsMajeurs);
+        nomsPrenomsMajeurs.forEach(nom => {
+            const saint = prenomsMajeurs[nom];
+            const sexe = saint.sexe;
+            saintsAvecSexe.push({ nom, sexe });
+        }); 
+        const pSaint1 = document.getElementById("p-saint1");
+        const pSaint2 = document.getElementById("p-saint2");
+        const saint1 = document.getElementById("saint1");
+        const saint2 = document.getElementById("saint2");
+
+        pSaint1.innerHTML = `${saintsAvecSexe[0].nom}`;
+        pSaint2.innerHTML = `${saintsAvecSexe[1].nom}`;
+
+        if (saintsAvecSexe[0].sexe === "féminin"){
+            saint1.src = "assets/photos/icons8-angel-100.png";
+            saint1.alt = "Un ange pour représenter le saint féminin du jour";
+        }
+        else{
+            saint1.src = "assets/photos/icons8-halo-100.png";
+            saint1.alt = "Une auréole pour représenter le saint masculin du jour";
+        }
+        if (saintsAvecSexe[1].sexe === "féminin"){
+            saint2.src = "assets/photos/icons8-angel-100.png";
+            saint2.alt = "Un ange pour représenter le saint féminin du jour";
+        }
+        else{
+            saint2.src = "assets/photos/icons8-halo-100.png";
+            saint2.alt = "Une auréole pour représenter le saint masculin du jour";
+        }
+    } else {
+        console.error("La liste des prénoms majeurs est undefined.");
+    } 
+    })
+    .catch(err => {
+        console.error(err);
+    }) 
+}
+
+function FetchMeteo(){
+        select = document.querySelector("select");
+        console.log(select.value);
+        let villechoose = select.value;
+        console.log(villechoose);
+        let uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
+        fetch(uri)
+        .then(resp => {
+            if (resp.ok){
+                return resp.json();
+            }
+            else{
+                throw new Error("Données non collectées");
+            }
+        })
+        .then(obj => {
+            console.log(obj);
+            nomVille = obj.city_info.name;
+            longday0 = obj.fcst_day_0.day_long;
+            date0 = obj.fcst_day_0.date;
+            longday1 = obj.fcst_day_1.day_long;
+            date1 = obj.fcst_day_1.date;
+            longday2 = obj.fcst_day_2.day_long;
+            date2 = obj.fcst_day_2.date;
+            const hourlyData0 = obj.fcst_day_0.hourly_data;
+            if (hourlyData0) {
+                const hour = Object.keys(hourlyData0);
+                hour.forEach(h => {
+                    const time = hourlyData0[h];
+                    const temps = time.TMP2m;
+                    const icon = time.ICON;
+                    const humidity = time.RH2m;
+                    iconAvecTempsJ0[h] = {temps, icon, humidity};
+                });  
+            } 
+            const hourlyData1 = obj.fcst_day_1.hourly_data;
+            if (hourlyData1) {
+                const hour = Object.keys(hourlyData1);
+                hour.forEach(h => {
+                    const time = hourlyData1[h];
+                    const temps = time.TMP2m;
+                    const icon = time.ICON;
+                    const humidity = time.RH2m;
+                    iconAvecTempsJ1[h] = {temps, icon, humidity};
+                });  
+            }
+            const hourlyData2 = obj.fcst_day_2.hourly_data;
+            if (hourlyData2) {
+                const hour = Object.keys(hourlyData2);
+                hour.forEach(h => {
+                    const time = hourlyData2[h];
+                    const temps = time.TMP2m;
+                    const icon = time.ICON;
+                    const humidity = time.RH2m;
+                    iconAvecTempsJ2[h] = {temps, icon, humidity};
+                });  
+                console.log(iconAvecTempsJ0["0H00"].humidity);
+            } 
+           /* Ici Données */
+    })
+    .catch(err => {
+        console.error(err);
+    }) 
+}
+
+function InfoVille(){
+        villechoose = select.value;
+        console.log(villechoose);
+        let uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
+                
+        fetch(uri)
+        .then(resp => {
+            if (resp.ok){
+                return resp.json();
+            }
+            else{
+                throw new Error("Données non collectées");
+            }
+        })
+        .then(obj => {
+            const pSunrise = document.getElementById("p-sunrise");
+            const pSunset = document.getElementById("p-sunset");
+            pSunrise.innerHTML = `${obj.city_info.sunrise}`;
+            pSunset.innerHTML = `${obj.city_info.sunset}`;
+
+            setInterval(function() {
+                let heure1 = new Date();
+
+                function twoDigit(n) {
+                    return (n < 10) ? '0' + n : n;
+                }
+
+                let h = heure1.getHours();
+                h = twoDigit(h);
+                let minute = heure1.getMinutes();
+                minute = twoDigit(minute);
+                let seconde = heure1.getSeconds();  
+                seconde = twoDigit(seconde);
+
+                heure = h + ":" + minute + ":" + seconde;
+                const pHeure = document.getElementById("heure");
+                pHeure.innerHTML = `${heure}`;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error(err);
+        }) 
+}
+
+function AfficherWelcome(){
     container.innerHTML = `
     <h1>Bienvenue sur Toulouse météo !</h1>
     <p>Ici vous pourrez retrouver la météo de Toulouse sous 3 jours</p>
     <p>Si vous souhaitez afficher la météo d'un autre grande ville</p>
     <br>
     <form>
-        <label for="ville" class="firstCol">Veuillez sélectionner la ville</label>
+        <label for="ville" class="firstCol" id="label-ville">Veuillez sélectionner la ville</label>
         <select name="ville" id="ville">
             <option value="toulouse" selected>Toulouse</option>
             <option value="paris">Paris</option>
@@ -33,358 +208,259 @@ window.addEventListener('load', ()=>{
         </select>
         <input type="submit" name='submit' id='submit-ville' value="Soumettre">
     </form>`
-    const select = document.querySelector("select");
-        const villechoose = select.value;
-        console.log(villechoose);
-        const uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
-        fetch(uri)
-        .then(resp => {
-            if (resp.ok){
-                return resp.json();
-            }
-            else{
-                throw new Error("Données non collectées");
-            }
-        })
-        .then(obj => {
-            console.log(obj);
-            const sunrise = obj.city_info.sunrise;
-            const sunset = obj.city_info.sunset;
-            todayInfo.innerHTML = `<p>Lever du soleil : `+sunrise+`</p>`
-            +`<p>Coucher du soleil : `+sunset+`</p>`;
-            const longday1 = obj.fcst_day_1.day_long;
-            const date1 = obj.fcst_day_1.date;
-            const img1H0 = obj.fcst_day_1.hourly_data?.[0]?.ICON;
-            const temp1H0 = obj.fcst_day_1.hourly_data?.[0]?.TMP2m;
-            const img1H1 = obj.fcst_day_1.hourly_data?.[1]?.ICON;
-            const temp1H1 = obj.fcst_day_1.hourly_data?.[1]?.TMP2m;
-            const img1H2 = obj.fcst_day_1.hourly_data?.[2]?.ICON;
-            const temp1H2 = obj.fcst_day_1.hourly_data?.[2]?.TMP2m;
-            const img1H3 = obj.fcst_day_1.hourly_data?.[3]?.ICON;
-            const temp1H3 = obj.fcst_day_1.hourly_data?.[3]?.TMP2m;
-            const img1H4 = obj.fcst_day_1.hourly_data?.[4]?.ICON;
-            const temp1H4 = obj.fcst_day_1.hourly_data?.[4]?.TMP2m;
-            const img1H5 = obj.fcst_day_1.hourly_data?.[5]?.ICON;
-            const temp1H5 = obj.fcst_day_1.hourly_data?.[5]?.TMP2m;
-            const img1H6 = obj.fcst_day_1.hourly_data?.[6]?.ICON;
-            const temp1H6 = obj.fcst_day_1.hourly_data?.[6]?.TMP2m;
-            const img1H7 = obj.fcst_day_1.hourly_data?.[7]?.ICON;
-            const temp1H7 = obj.fcst_day_1.hourly_data?.[7]?.TMP2m;
-            const img1H8 = obj.fcst_day_1.hourly_data?.[8]?.ICON;
-            const temp1H8 = obj.fcst_day_1.hourly_data?.[8]?.TMP2m;
-            const img1H9 = obj.fcst_day_1.hourly_data?.[9]?.ICON;
-            const temp1H9 = obj.fcst_day_1.hourly_data?.[9]?.TMP2m;
-            const img1H10 = obj.fcst_day_1.hourly_data?.[10]?.ICON;
-            const temp1H10 = obj.fcst_day_1.hourly_data?.[10]?.TMP2m;
-            const img1H11 = obj.fcst_day_1.hourly_data?.[11]?.ICON;
-            const temp1H11 = obj.fcst_day_1.hourly_data?.[11]?.TMP2m;
-            const img1H12 = obj.fcst_day_1.hourly_data?.[12]?.ICON;
-            const temp1H12 =obj.fcst_day_1.hourly_data?.[12]?.TMP2m;
-            const img1H13 = obj.fcst_day_1.hourly_data?.[13]?.ICON;
-            const temp1H13 = obj.fcst_day_1.hourly_data?.[13]?.TMP2m;
-            const img1H14 = obj.fcst_day_1.hourly_data?.[14]?.ICON;
-            const temp1H14 = obj.fcst_day_1.hourly_data?.[14]?.TMP2m;
-            const img1H15 = obj.fcst_day_1.hourly_data?.[15]?.ICON;
-            const temp1H15 = obj.fcst_day_1.hourly_data?.[15]?.TMP2m;
-            const img1H16 = obj.fcst_day_1.hourly_data?.[16]?.ICON;
-            const temp1H16 = obj.fcst_day_1.hourly_data?.[16]?.TMP2m;
-            const img1H17 = obj.fcst_day_1.hourly_data?.[17]?.ICON;
-            const temp1H17 = obj.fcst_day_1.hourly_data?.[17]?.TMP2m;
-            const img1H18 = obj.fcst_day_1.hourly_data?.[18]?.ICON;
-            const temp1H18 = obj.fcst_day_1.hourly_data?.[18]?.TMP2m;
-            const img1H19 = obj.fcst_day_1.hourly_data?.[19]?.ICON;
-            const temp1H19 = obj.fcst_day_1.hourly_data?.[19]?.TMP2m;
-            const img1H20 = obj.fcst_day_1.hourly_data?.[20]?.ICON;
-            const temp1H20 = obj.fcst_day_1.hourly_data?.[20]?.TMP2m;
-            const img1H21 = obj.fcst_day_1.hourly_data?.[21]?.ICON;
-            const temp1H21 = obj.fcst_day_1.hourly_data?.[21]?.TMP2m;
-            const img1H22 = obj.fcst_day_1.hourly_data?.[22]?.ICON;
-            const temp1H22 = obj.fcst_day_1.hourly_data?.[22]?.TMP2m;
-            const img1H23 = obj.fcst_day_1.hourly_data?.[23]?.ICON;
-            const temp1H23 = obj.fcst_day_1.hourly_data?.[23]?.TMP2m;
-            const longday2 = obj.fcst_day_2.day_long;
-            const date2 = obj.fcst_day_2.date;
-            const img2H0 = obj.fcst_day_2.hourly_data?.[0]?.ICON;
-            const temp2H0 = obj.fcst_day_2.hourly_data?.[0]?.TMP2m;
-            const img2H1 = obj.fcst_day_2.hourly_data?.[1]?.ICON;
-            const temp2H1 = obj.fcst_day_2.hourly_data?.[1]?.TMP2m;
-            const img2H2 = obj.fcst_day_2.hourly_data?.[2]?.ICON;
-            const temp2H2 = obj.fcst_day_2.hourly_data?.[2]?.TMP2m;
-            const img2H3 = obj.fcst_day_2.hourly_data?.[3]?.ICON;
-            const temp2H3 = obj.fcst_day_2.hourly_data?.[3]?.TMP2m;
-            const img2H4 = obj.fcst_day_2.hourly_data?.[4]?.ICON;
-            const temp2H4 = obj.fcst_day_2.hourly_data?.[4]?.TMP2m;
-            const img2H5 = obj.fcst_day_2.hourly_data?.[5]?.ICON;
-            const temp2H5 = obj.fcst_day_2.hourly_data?.[5]?.TMP2m;
-            const img2H6 = obj.fcst_day_2.hourly_data?.[6]?.ICON;
-            const temp2H6 = obj.fcst_day_2.hourly_data?.[6]?.TMP2m;
-            const img2H7 = obj.fcst_day_2.hourly_data?.[7]?.ICON;
-            const temp2H7 = obj.fcst_day_2.hourly_data?.[7]?.TMP2m;
-            const img2H8 = obj.fcst_day_2.hourly_data?.[8]?.ICON;
-            const temp2H8 = obj.fcst_day_2.hourly_data?.[8]?.TMP2m;
-            const img2H9 = obj.fcst_day_2.hourly_data?.[9]?.ICON;
-            const temp2H9 = obj.fcst_day_2.hourly_data?.[9]?.TMP2m;
-            const img2H10 = obj.fcst_day_2.hourly_data?.[10]?.ICON;
-            const temp2H10 = obj.fcst_day_2.hourly_data?.[10]?.TMP2m;
-            const img2H11 = obj.fcst_day_2.hourly_data?.[11]?.ICON;
-            const temp2H11 = obj.fcst_day_2.hourly_data?.[11]?.TMP2m;
-            const img2H12 = obj.fcst_day_2.hourly_data?.[12]?.ICON;
-            const temp2H12 = obj.fcst_day_2.hourly_data?.[12]?.TMP2m;
-            const img2H13 = obj.fcst_day_2.hourly_data?.[13]?.ICON;
-            const temp2H13 = obj.fcst_day_2.hourly_data?.[13]?.TMP2m;
-            const img2H14 = obj.fcst_day_2.hourly_data?.[14]?.ICON;
-            const temp2H14 = obj.fcst_day_2.hourly_data?.[14]?.TMP2m;
-            const img2H15 = obj.fcst_day_2.hourly_data?.[15]?.ICON;
-            const temp2H15 = obj.fcst_day_2.hourly_data?.[15]?.TMP2m;
-            const img2H16 = obj.fcst_day_2.hourly_data?.[16]?.ICON;
-            const temp2H16 = obj.fcst_day_2.hourly_data?.[16]?.TMP2m;
-            const img2H17 = obj.fcst_day_2.hourly_data?.[17]?.ICON;
-            const temp2H17 = obj.fcst_day_2.hourly_data?.[17]?.TMP2m;
-            const img2H18 = obj.fcst_day_2.hourly_data?.[18]?.ICON;
-            const temp2H18 = obj.fcst_day_2.hourly_data?.[18]?.TMP2m;
-            const img2H19 = obj.fcst_day_2.hourly_data?.[19]?.ICON;
-            const temp2H19 = obj.fcst_day_2.hourly_data?.[19]?.TMP2m;
-            const img2H20 = obj.fcst_day_2.hourly_data?.[20]?.ICON;
-            const temp2H20 = obj.fcst_day_2.hourly_data?.[20]?.TMP2m;
-            const img2H21 = obj.fcst_day_2.hourly_data?.[21]?.ICON;
-            const temp2H21 = obj.fcst_day_2.hourly_data?.[21]?.TMP2m;
-            const img2H22 = obj.fcst_day_2.hourly_data?.[22]?.ICON;
-            const temp2H22 = obj.fcst_day_2.hourly_data?.[22]?.TMP2m;
-            const img2H23 = obj.fcst_day_2.hourly_data?.[23]?.ICON;
-            const temp2H23 = obj.fcst_day_2.hourly_data?.[23]?.TMP2m;
-            const longday0 = obj.fcst_day_0.day_long;
-            const date0 = obj.fcst_day_0.date;
-            const img0H0 = obj.fcst_day_0.hourly_data?.[0]?.ICON;
-            const temp0H0 = obj.fcst_day_0.hourly_data?.[0]?.TMP2m;
-            const img0H1 = obj.fcst_day_0.hourly_data?.[1]?.ICON;
-            const temp0H1 = obj.fcst_day_0.hourly_data?.[1]?.TMP2m;
-            const img0H2 = obj.fcst_day_0.hourly_data?.[2]?.ICON;
-            const temp0H2 = obj.fcst_day_0.hourly_data?.[2]?.TMP2m;
-            const img0H3 = obj.fcst_day_0.hourly_data?.[3]?.ICON;
-            const temp0H3 = obj.fcst_day_0.hourly_data?.[3]?.TMP2m;
-            const img0H4 = obj.fcst_day_0.hourly_data?.[4]?.ICON;
-            const temp0H4 = obj.fcst_day_0.hourly_data?.[4]?.TMP2m;
-            const img0H5 = obj.fcst_day_0.hourly_data?.[5]?.ICON;
-            const temp0H5 = obj.fcst_day_0.hourly_data?.[5]?.TMP2m;
-            const img0H6 = obj.fcst_day_0.hourly_data?.[6]?.ICON;
-            const temp0H6 = obj.fcst_day_0.hourly_data?.[6]?.TMP2m;
-            const img0H7 = obj.fcst_day_0.hourly_data?.[7]?.ICON;
-            const temp0H7 = obj.fcst_day_0.hourly_data?.[7]?.TMP2m;
-            const img0H8 = obj.fcst_day_0.hourly_data?.[8]?.ICON;
-            const temp0H8 = obj.fcst_day_0.hourly_data?.[8]?.TMP2m;
-            const img0H9 = obj.fcst_day_0.hourly_data?.[9]?.ICON;
-            const temp0H9 = obj.fcst_day_0.hourly_data?.[9]?.TMP2m;
-            const img0H10 = obj.fcst_day_0.hourly_data?.[10]?.ICON;
-            const temp0H10 = obj.fcst_day_0.hourly_data?.[10]?.TMP2m;
-            const img0H11 = obj.fcst_day_0.hourly_data?.[11]?.ICON;
-            const temp0H11 = obj.fcst_day_0.hourly_data?.[11]?.TMP2m;
-            const img0H12 = obj.fcst_day_0.hourly_data?.[12]?.ICON;
-            const temp0H12 = obj.fcst_day_0.hourly_data?.[12]?.TMP2m;
-            const img0H13 = obj.fcst_day_0.hourly_data?.[13]?.ICON;
-            const temp0H13 = obj.fcst_day_0.hourly_data?.[13]?.TMP2m;
-            const img0H14 = obj.fcst_day_0.hourly_data?.[14]?.ICON;
-            const temp0H14 = obj.fcst_day_0.hourly_data?.[14]?.TMP2m;
-            const img0H15 = obj.fcst_day_0.hourly_data?.[15]?.ICON;
-            const temp0H15 = obj.fcst_day_0.hourly_data?.[15]?.TMP2m;
-            const img0H16 = obj.fcst_day_0.hourly_data?.[16]?.ICON;
-            const temp0H16 = obj.fcst_day_0.hourly_data?.[16]?.TMP2m;
-            const img0H17 = obj.fcst_day_0.hourly_data?.[17]?.ICON;
-            const temp0H17 = obj.fcst_day_0.hourly_data?.[17]?.TMP2m;
-            const img0H18 = obj.fcst_day_0.hourly_data?.[18]?.ICON;
-            const temp0H18 = obj.fcst_day_0.hourly_data?.[18]?.TMP2m;
-            const img0H19 = obj.fcst_day_0.hourly_data?.[19]?.ICON;
-            const temp0H19 = obj.fcst_day_0.hourly_data?.[19]?.TMP2m;
-            const img0H20 = obj.fcst_day_0.hourly_data?.[20]?.ICON;
-            const temp0H20 = obj.fcst_day_0.hourly_data?.[20]?.TMP2m;
-            const img0H21 = obj.fcst_day_0.hourly_data?.[21]?.ICON;
-            const temp0H21 = obj.fcst_day_0.hourly_data?.[21]?.TMP2m;
-            const img0H22 = obj.fcst_day_0.hourly_data?.[22]?.ICON;
-            const temp0H22 = obj.fcst_day_0.hourly_data?.[22]?.TMP2m;
-            const img0H23 = obj.fcst_day_0.hourly_data?.[23]?.ICON;
-            const temp0H23 = obj.fcst_day_0.hourly_data?.[23]?.TMP2m;
+        inputVille = document.getElementById("submit-ville");
+        inputVille.addEventListener("click", ()=>{
+        FetchMeteo();
+    });
+}
 
-            li1.addEventListener("click", ()=>{
-                li1.classList.add("click-on");
-                li2.classList.remove("click-on");
-                li3.classList.remove("click-on");
-                li4.classList.remove("click-on");
-                li5.classList.remove("click-on");
-                container.innerHTML = `
-                <h1>Bienvenue sur Toulouse météo !</h1>
-                <p>Ici vous pourrez retrouver la météo de Toulouse sous 3 jours</p>
-                <p>Si vous souhaitez afficher la météo d'un autre grande ville</p>
-                <br>
-                <form>
-                    <label for="ville" class="firstCol">Veuillez sélectionner la ville</label>
-                    <select name="ville" id="ville">
-                        <option value="toulouse" selected>Toulouse</option>
-                        <option value="paris">Paris</option>
-                        <option value="marseille">Marseille</option>
-                        <option value="lyon">Lyon</option>
-                        <option value="nice">Nice</option>
-                        <option value="nantes">Nantes</option>
-                        <option value="montpelier">Montpelier</option>
-                        <option value="strasbourg">Strasbourg</option>
-                        <option value="bordeaux">Bordeaux</option>
-                        <option value="lille">Lille</option>
-                    </select>
-                    <input type="submit" name='submit' id='submit-ville' value="Soumettre">
-                </form>`
-                const inputVille = document.getElementById("submit-ville");
-                inputVille.addEventListener("click", ()=>{
-                    const select = document.querySelector("select");
-                    const villechoose = select.value;
-                    console.log(villechoose);
-                    const uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
-                    fetch(uri)
-                    .then(resp => {
-                        if (resp.ok){
-                            return resp.json();
-                        }
-                        else{
-                            throw new Error("Données non collectées");
-                        }
-                    })
-                    .then(obj => {
-                        /* const choix = datechoose;
-                        const img = document.querySelector("img");
-                        const urlImg = obj.url;
-                        img.alt = "Image du jour de la Nasa : " + obj.date;
-                        img.src = urlImg;
-                        const legend = document.querySelector("legend");
-                        legend.textContent = obj.title;
-                        const p = document.querySelector("p");
-                        p.textContent = obj.explanation */
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    }) 
-                })
-            })
-            li2.addEventListener("click", ()=>{
-                li2.classList.add("click-on");
-                li1.classList.remove("click-on");
-                li3.classList.remove("click-on");
-                li4.classList.remove("click-on");
-                li5.classList.remove("click-on");
-                container.innerHTML = `<h1>La météo de`+ villechoose +`du`+ longday0 + date0 +`</h1>
-                <table>
-                    <tr>`+ temp0H0 +`</tr>
-                    <td>`+ img0H0 +`</td>
-                    <tr>`+ temp0H1 +`</tr>
-                    <td>`+ img0H1 +`</td>
-                    <tr>`+ temp0H2 +`</tr>
-                    <td>`+ img0H2 +`</td>
-                    <tr>`+ temp0H3 +`</tr>
-                    <td>`+ img0H3 +`</td>
-                    <tr>`+ temp0H4 +`</tr>
-                    <td>`+ img0H4 +`</td>
-                    <tr>`+ temp0H5 +`</tr>
-                    <td>`+ img0H5 +`</td>
-                    <tr>`+ temp0H6 +`</tr>
-                    <td>`+ img0H6 +`</td>
-                    <tr>`+ temp0H7 +`</tr>
-                    <td>`+ img0H7 +`</td>
-                    <tr>`+ temp0H8 +`</tr>
-                    <td>`+ img0H8 +`</td>
-                    <tr>`+ temp0H9 +`</tr>
-                    <td>`+ img0H9 +`</td>
-                    <tr>`+ temp0H10 +`</tr>
-                    <td>`+ img0H10 +`</td>
-                    <tr>`+ temp0H11 +`</tr>
-                    <td>`+ img0H11 +`</td>
-                    <tr>`+ temp0H12 +`</tr>
-                    <td>`+ img0H12 +`</td>
-                    <tr>`+ temp0H13 +`</tr>
-                    <td>`+ img0H13 +`</td>
-                    <tr>`+ temp0H14 +`</tr>
-                    <td>`+ img0H14 +`</td>
-                    <tr>`+ temp0H15 +`</tr>
-                    <td>`+ img0H15 +`</td>
-                    <tr>`+ temp0H16 +`</tr>
-                    <td>`+ img0H16 +`</td>
-                    <tr>`+ temp0H17 +`</tr>
-                    <td>`+ img0H17 +`</td>
-                    <tr>`+ temp0H18 +`</tr>
-                    <td>`+ img0H18 +`</td>
-                    <tr>`+ temp0H19 +`</tr>
-                    <td>`+ img0H19 +`</td>
-                    <tr>`+ temp0H20 +`</tr>
-                    <td>`+ img0H20 +`</td>
-                    <tr>`+ temp0H21 +`</tr>
-                    <td>`+ img0H21 +`</td>
-                    <tr>`+ temp0H22 +`</tr>
-                    <td>`+ img0H22 +`</td>
-                    <tr>`+ temp0H23 +`</tr>
-                    <td>`+ img0H23 +`</td>
-                </table>`;
-            })
-            li3.addEventListener("click", ()=>{
-                li3.classList.add("click-on");
-                li2.classList.remove("click-on");
-                li1.classList.remove("click-on");
-                li4.classList.remove("click-on");
-                li5.classList.remove("click-on");
-                container.innerHTML = `<a href="https://www.prevision-meteo.ch/meteo/localite/toulouse"><img src="https://www.prevision-meteo.ch/uploads/widget/toulouse_1.png" max-width="650" height="250" /></a>`;
-            })
-            li4.addEventListener("click", ()=>{
-                li4.classList.add("click-on");
-                li2.classList.remove("click-on");
-                li3.classList.remove("click-on");
-                li1.classList.remove("click-on");
-                li5.classList.remove("click-on");
-                container.innerHTML = `<a href="https://www.prevision-meteo.ch/meteo/localite/toulouse"><img src="https://www.prevision-meteo.ch/uploads/widget/toulouse_2.png" max-width="650" height="250" /></a>`;
-            })
-            li5.addEventListener("click", ()=>{
-                li5.classList.add("click-on");
-                li2.classList.remove("click-on");
-                li3.classList.remove("click-on");
-                li1.classList.remove("click-on");
-                li4.classList.remove("click-on");
-                container.innerHTML = `
-                <form id="inscriptionForm">
-                    <fieldset>
-                        <label for="nom" class="firstCol">Nom</label>
-                        <input type="text" name="nom" id="nom" size="20" min="2" max="50" placeholder="Votre nom">
-                        <br>
-                        <label for="prenom" class="firstCol">Prénom</label>
-                        <input type="text" name="prenom" id="prenom" size="20" min="2" max="50" placeholder="Votre prenom">
-                        <br>
-                        <label for="mail" class="firstCol">E-Mail</label>
-                        <input type="text" name="mail" id="mail" size="20" min="2" max="50" placeholder="Votre e-mail">
-                        <br>
-                        <label for="message" class="firstCol">Message</label>
-                        <input type="text" name="message" id="message" size="80" min="2" max="500" placeholder="Votre message en moins de 500 caractères">
-                        <br>
-                        <a id="mailto" href="mailto:elisa.bothy@gmail.com"><input type="submit" name='submit' id='submit' value="Soumettre"></a>
-                    </fieldset>
-                </form>`;
-            })
-        })
-        .catch(err => {
-            console.error(err);
-        }) 
-    const inputVille = document.getElementById("submit-ville");
-    inputVille.addEventListener("click", ()=>{
-        const select = document.querySelector("select");
-        const villechoose = select.value;
+window.addEventListener('load', ()=>{
+    li1.classList.add("click-on");
+    li2.classList.remove("click-on");
+    li3.classList.remove("click-on");
+    li4.classList.remove("click-on");
+    li5.classList.remove("click-on");
+    AfficherWelcome();
+    FetchSaints();
+    FetchMeteo();
+    InfoVille();
+    inputVille = document.getElementById("submit-ville");
+    select = document.querySelector("select");
+    let debounce = false;
+    const buttonAnimate = () => {
+        inputVille.classList.add("animate");
+        setTimeout(() => {
+            $button.classList.remove("animate");
+            debounce = false;
+        }, 700);
+        if (debounce) return;
+        debounce = true;
+        buttonAnimate();                
+        villechoose = select.value;
         console.log(villechoose);
-        const uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
-        fetch(uri)
-        .then(resp => {
-            if (resp.ok){
-                return resp.json();
-            }
-            else{
-                throw new Error("Données non collectées");
-            }
-        })
-        .then(obj => {
-            
-
-        })
-        .catch(err => {
-            console.error(err);
-        }) 
-    })
+    };
 })
+        
+
+
+li1.addEventListener("click", ()=>{
+    li1.classList.add("click-on");
+    li2.classList.remove("click-on");
+    li3.classList.remove("click-on");
+    li4.classList.remove("click-on");
+    li5.classList.remove("click-on");
+    AfficherWelcome();
+    let debounce = false;
+    const buttonAnimate = () => {
+        inputVille.classList.add("animate");
+        setTimeout(() => {
+            $button.classList.remove("animate");
+            debounce = false;
+        }, 700);
+        if (debounce) return;
+        debounce = true;
+        buttonAnimate();                
+        villechoose = select.value;
+        console.log(villechoose);
+    };
+}); 
+
+
+
+
+li2.addEventListener("click", ()=>{
+    li2.classList.add("click-on");
+    li1.classList.remove("click-on");
+    li3.classList.remove("click-on");
+    li4.classList.remove("click-on");
+    li5.classList.remove("click-on");
+    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday0 + ` ` + date0 +`</h1>
+    <table>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>${iconAvecTempsJ0[hourKey].temps}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    if(iconAvecTempsJ0[hourKey].humidity>=60){
+                        tdContent += `<td>${iconAvecTempsJ0[hourKey].humidity}%</td>`;
+                    }
+                    else{
+                        tdContent += ``;
+                    }
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>
+                                    <img src="${iconAvecTempsJ0[hourKey].icon}" alt="Le temps à ${i}H">
+                                    </td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H`;
+                    tdContent += `<td>${hourKey}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+    </table>`;
+});
+
+li3.addEventListener("click", ()=>{
+    li3.classList.add("click-on");
+    li2.classList.remove("click-on");
+    li1.classList.remove("click-on");
+    li4.classList.remove("click-on");
+    li5.classList.remove("click-on");
+    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday1 + ` ` + date1 +`</h1>
+    <table>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>${iconAvecTempsJ1[hourKey].temps}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    if(iconAvecTempsJ1[hourKey].humidity>=60){
+                        tdContent += `<td>${iconAvecTempsJ1[hourKey].humidity}%</td>`;
+                    }
+                    else{
+                        tdContent += ``;
+                    }
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>
+                                    <img src="${iconAvecTempsJ1[hourKey].icon}" alt="Le temps à ${i}H">
+                                    </td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H`;
+                    tdContent += `<td>${hourKey}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+    </table>`;
+});
+
+li4.addEventListener("click", ()=>{
+    li4.classList.add("click-on");
+    li2.classList.remove("click-on");
+    li3.classList.remove("click-on");
+    li1.classList.remove("click-on");
+    li5.classList.remove("click-on");
+    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday2 + ` ` + date2 +`</h1>
+    <table>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>${iconAvecTempsJ2[hourKey].temps}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    if(iconAvecTempsJ2[hourKey].humidity>=60){
+                        tdContent += `<td>${iconAvecTempsJ2[hourKey].humidity}%</td>`;
+                    }
+                    else{
+                        tdContent += ``;
+                    }
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H00`;
+                    tdContent += `<td>
+                                    <img src="${iconAvecTempsJ2[hourKey].icon}" alt="Le temps à ${i}H">
+                                    </td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+        <tr>
+            ${(() => {
+                let tdContent = '';
+                for (let i = 0; i < 23; i++) {
+                    const hourKey = `${i}H`;
+                    tdContent += `<td>${hourKey}</td>`;
+                }
+                return tdContent;
+            })()}
+        </tr>
+    </table>`;
+});
+
+li5.addEventListener("click", ()=>{
+    li5.classList.add("click-on");
+    li2.classList.remove("click-on");
+    li3.classList.remove("click-on");
+    li1.classList.remove("click-on");
+    li4.classList.remove("click-on");
+    container.innerHTML = `
+    <form id="inscriptionForm">
+        <fieldset>
+            <input type="text" required name="nom" id="nom" size="20" min="2" max="50" placeholder="Votre nom">
+            <br>
+            <input type="text" required name="prenom" id="prenom" size="20" min="2" max="50" placeholder="Votre prenom">
+            <br>
+            <input type="text" required name="mail" id="mail" size="20" min="2" max="50" placeholder="Votre e-mail">
+            <br>
+            <textarea type="text" required name="message" id="message" minlength="10" maxlenght="500" placeholder="Votre message en moins de 500 caractères"></textarea>
+            <br>
+            <br>
+            <a id="mailto" href="mailto:elisa.botry@gmail.com"><input type="submit" name='submit' id='submit' value="Soumettre"></a>
+        </fieldset>
+    </form>`;
+});

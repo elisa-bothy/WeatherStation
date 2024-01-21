@@ -1,16 +1,22 @@
 :root{
-    --color-text:#000;
+    --color-text:#30303d;
     --color-background:#76899E;
-    --color-background-nav-click:#8AA8D6;
-    --color-background-nav: #76899E;
-    --color-background-nav-today-info: #d4d68a;
+    --color-background-nav-click:#cdddf4;
+    --color-background-nav: #86B6FA;
+    --color-background-nav-today-info: #D4D68A;
+    --color-text-today-info: #597392;
+    --color-input-glow: #e6edf7;
+    --color-input-shadow: #95a8c2;
+    --color-fieldset-glow:#c6d1e2;
+    --color-fieldset-shadow:#7b8797;
+    --color-text-input:#222227;
 }
 
-@media all and (min-width: 768px) {
+@media all and (min-width: 200px) {
     
 }
 
-@media all and (min-width: 890px) {
+@media all and (min-width: 1050px) {
     body{
         min-height: 200vh;
     }
@@ -24,13 +30,19 @@
         position: fixed;
         padding: 40px 0 0 0;
         z-index: 1;
+        font-family: sans-serif;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;            
+    }    
+
+    .headerScroll{
+      z-index: 3;
     }
-    
     
     .logo{
         text-decoration: 0;
-        font-weight: bold;
-        
+        font-weight: bold;  
     }
     
     header ul, header div{
@@ -42,19 +54,22 @@
     header ul li{
         position: relative;
         list-style: none;
-        font-family: Arial, Helvetica, sans-serif;
         background-color: var(--color-background-nav);
+    }
+
+    header a{
+      color:var(--color-text)
     }
     
     header ul li a {
         text-decoration: 0;
-        color: var(--color-text)
     }
     
-    header ul li a :link{color:var(--color-text) ;text-decoration: none;}
-    header ul li a :visited{text-decoration: none;color: var(--color-text);}
-    header ul li a :active{color: var(--color-text);}
-    header ul li a :hover{color: var(--color-text);}
+    header a :link{color:var(--color-text) ;text-decoration: none;}
+    header a :visited{text-decoration: none;color: var(--color-text);}
+    header a :active{color: var(--color-text);}
+    header  a :hover{color: var(--color-text);}
+    header li:hover{background-color: var(--color-background-nav-click);color: var(--color-text);}
 
     ul, div{
         width: 100%;
@@ -71,38 +86,100 @@
 
     #today-info{
         background-color: var(--color-background-nav-today-info);
-        height:600px;
+        height:1440px;
         margin-top: 16px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: start;
     } 
+
+    #today-info p{
+      font-family: sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-today-info);
+    }
+
+    #today-info p, #today-info img{
+      position: relative;  
+      flex-direction: row; 
+    }
+
+    #p-sunset, #p-sunrise{
+      font-size: x-large;
+      font-weight: 500;
+    }
+
+    .text-bold{
+      font-weight: 600;
+      font-size: xx-large;
+    }
+
+    #date{
+      position: relative;
+      top: 100px;
+    }
+
+    #sunrise, #sunset{
+      width: 50px;
+      height: 50px;
+    }
+
+    #saint1, #saint2{
+      width: 50px;
+      height: 50px;
+    }
 
     .click-on{
         background-color: var(--color-background-nav-click);
+        color: var(--color-text);
     }
 
     .container{
         display: flex;
         position: relative;
         background-color: var(--color-background-nav-click);
-        justify-content: left;
         right: 8px;
-        width: 81.5%;
+        width: 82.2%;
         height: 600px;
         margin-top: 9.7%;
         padding: 0 0 0 0;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        font-weight: bold;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: sans-serif;
+        font-weight: 500;
+        font-size: smaller;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--color-text);
         flex-direction: column;
-    }
-
-    .container img{
-        border: solid 4px black;
     }
 
     .container form, .container select{
         z-index: 2;
+    }
+
+    .container #ville{
+      font-family: sans-serif;
+      width: 125px;
+      height: 30px;
+      text-align: center;
+      font-weight: 500;
+      font-size: smaller;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-input);
+      background-color: var(--color-background-nav-click);
+      border:transparent;
+      cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 5px 5px 10px var(--color-input-shadow), -5px -5px 10px var(--color-input-glow);
+    }
+    
+    #ville:hover{
+      box-shadow: inset 5px 5px 10px var(--color-input-shadow), inset -5px -5px 10px var(--color-input-glow);
     }
 
     .container input{
@@ -115,6 +192,159 @@
     .container a:active{color: var(--color-text);text-decoration: none;}
     .container a:hover{color: var(--color-text);text-decoration: none;}
 
+    table{
+      border-collapse: collapse;
+      font-family: sans-serif;
+      font-weight: 500;
+      font-size: smaller;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-input);
+  }
+  
+  td {
+      text-align: center;
+  }
+  
+  
+  td img{
+      width: 32px;
+  }
 
-}
+  #submit-ville {
+      font-family: sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-input);
+    }
+       
+    #submit-ville {
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      position: relative;
+      top: 25px;
+      left: 65px;
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      background-color: var(--color-background-nav-click);
+      box-shadow: 10px 10px 20px var(--color-input-shadow), -10px -10px 20px var(--color-input-glow);
+      cursor: pointer;
+    }
+
+    #submit-ville:hover{
+      box-shadow: inset 10px 10px 20px var(--color-fieldset-shadow), inset -10px -10px 20px var(--color-input-glow);
+    }
+    
+    .animate {
+      animation: shadowDeepIn 200ms ease-out forwards,
+          shadowDeepOut 200ms 300ms ease-in forwards,
+        darkenColor 200ms ease-out forwards,
+        darkenColor 200ms 300ms ease-in reverse forwards;
+    }
+    
+    @keyframes shadowDeepIn {
+      0% {
+        box-shadow: 10px 10px 20px var(--color-input-shadow), -10px -10px 20px var(--color-input-glow);
+      }
+      50% {
+        box-shadow: none;
+      }
+      100% {
+        box-shadow: inset 10px 10px 20px var(--color-input-shadow), inset -10px -10px 20px var(--color-input-glow);
+      }
+    }
+    
+    @keyframes shadowDeepOut {
+      0% {
+        box-shadow: inset 10px 10px 20px var(--color-input-shadow), inset -10px -10px 20px var(--color-input-glow);
+      }
+      50% {
+        box-shadow: none;
+      }
+      100% {
+        box-shadow: 10px 10px 20px var(--color-input-shadow), -10px -10px 20px var(--color-input-glow);
+      }
+    }
+    
+    @keyframes darkenColor {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.5;
+      }
+    }
+
+    fieldset{
+      padding: 2%;
+      border-radius: 5px;
+      border-color: transparent;
+      box-shadow: 5px 5px 10px var(--color-fieldset-shadow), -10px -10px 20px var(--color-fieldset-glow);
+    }
+
+    fieldset #submit{
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      position: relative;
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      border-radius: 5px;
+      border-color: var(--color-input-glow) var(--color-input-shadow) var(--color-input-shadow) var(--color-input-glow);
+      box-shadow: 5px 5px 10px var(--color-input-shadow), -10px -10px 20px var(--color-input-glow);
+    }
+
+    #submit{
+      font-family: sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-input);
+    }
+
+    #submit:hover{
+      box-shadow: inset 10px 10px 20px var(--color-input-shadow), inset -10px -10px 20px var(--color-input-glow);
+    }
+
+    fieldset input{
+      height: 25px;
+    }
+
+    fieldset input, fieldset textarea{
+      font-family: sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 5px;
+      background-color: var(--color-background-nav-click);
+      color: var(--color-text-input);
+      box-shadow: 5px 5px 10px var(--color-input-shadow), -5px -5px 10px var(--color-input-glow);
+      border:transparent solid 2px;
+    }
+
+    fieldset input:hover, fieldset textarea:hover{
+      box-shadow: inset 5px 5px 10px var(--color-input-shadow), inset -5px -5px 10px var(--color-input-glow);
+    }
+
+    fieldset input:focus, fieldset textarea:focus{
+      outline: none;
+      box-shadow: inset 2px 2px 5px var(--color-input-shadow), inset -2px -2px 5px var(--color-input-glow);
+    }    
+
+    #message{
+      max-width: 750px;
+      min-width: 600px;
+      height: 200px;
+      border-radius: 8px;
+     }
+
+  }
+
+
 
