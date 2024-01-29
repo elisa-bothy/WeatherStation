@@ -142,6 +142,73 @@ function FetchMeteo(){
     }) 
 }
 
+function FetchMeteo2(){
+    select = document.querySelector("select");
+    console.log(select.value);
+    let villechoose = select.value;
+    console.log(villechoose);
+    let uri = "https://www.prevision-meteo.ch/services/json/" + villechoose;
+    fetch(uri)
+    .then(resp => {
+        if (resp.ok){
+            return resp.json();
+        }
+        
+        else{
+            throw new Error("Données non collectées");
+        }
+    })
+    .then(obj2 => {
+        console.log(obj2);
+        nomVille = obj2.city_info.name;
+        longday0 = obj2.fcst_day_0.day_long;
+        date0 = obj2.fcst_day_0.date;
+        longday1 = obj2.fcst_day_1.day_long;
+        date1 = obj2.fcst_day_1.date;
+        longday2 = obj2.fcst_day_2.day_long;
+        date2 = obj2.fcst_day_2.date;
+        const hourlyData0 = obj2.fcst_day_0.hourly_data;
+        if (hourlyData0) {
+            const hour = Object.keys(hourlyData0);
+            hour.forEach(h => {
+                const time = hourlyData0[h];
+                const temps = time.TMP2m;
+                const icon = time.ICON;
+                const humidity = time.RH2m;
+                iconAvecTempsJ0[h] = {temps, icon, humidity};
+            });  
+        } 
+        const hourlyData1 = obj2.fcst_day_1.hourly_data;
+        if (hourlyData1) {
+            const hour = Object.keys(hourlyData1);
+            hour.forEach(h => {
+                const time = hourlyData1[h];
+                const temps = time.TMP2m;
+                const icon = time.ICON;
+                const humidity = time.RH2m;
+                iconAvecTempsJ1[h] = {temps, icon, humidity};
+            });  
+        }
+        const hourlyData2 = obj2.fcst_day_2.hourly_data;
+        if (hourlyData2) {
+            const hour = Object.keys(hourlyData2);
+            hour.forEach(h => {
+                const time = hourlyData2[h];
+                const temps = time.TMP2m;
+                const icon = time.ICON;
+                const humidity = time.RH2m;
+                iconAvecTempsJ2[h] = {temps, icon, humidity};
+            });  
+            console.log(iconAvecTempsJ0["0H00"].humidity);
+        } 
+       /* Ici Données */
+})
+.catch(err => {
+    console.error(err);
+}) 
+}
+
+
 function InfoVille(){
         villechoose = select.value;
         console.log(villechoose);
@@ -208,10 +275,6 @@ function AfficherWelcome(){
         </select>
         <input type="submit" name='submit' id='submit-ville' value="Soumettre">
     </form>`
-        inputVille = document.getElementById("submit-ville");
-        inputVille.addEventListener("click", ()=>{
-        FetchMeteo();
-    });
 }
 
 window.addEventListener('load', ()=>{
@@ -239,6 +302,10 @@ window.addEventListener('load', ()=>{
         villechoose = select.value;
         console.log(villechoose);
     };
+    inputVille = document.getElementById("submit-ville");
+        inputVille.addEventListener("click", ()=>{
+        FetchMeteo2();
+    });
 })
         
 
@@ -263,6 +330,10 @@ li1.addEventListener("click", ()=>{
         villechoose = select.value;
         console.log(villechoose);
     };
+    inputVille = document.getElementById("submit-ville");
+        inputVille.addEventListener("click", ()=>{
+        FetchMeteo2();
+    });
 }); 
 
 
@@ -274,7 +345,8 @@ li2.addEventListener("click", ()=>{
     li3.classList.remove("click-on");
     li4.classList.remove("click-on");
     li5.classList.remove("click-on");
-    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday0 + ` ` + date0 +`</h1>
+    container.innerHTML = `<fieldset id="weather-table">
+    <h1>La météo de `+ nomVille +` du `+ longday0 + ` ` + date0 +`</h1>
     <table>
         <tr>
             ${(() => {
@@ -323,7 +395,8 @@ li2.addEventListener("click", ()=>{
                 return tdContent;
             })()}
         </tr>
-    </table>`;
+    </table>
+</fieldset>`;
 });
 
 li3.addEventListener("click", ()=>{
@@ -332,7 +405,8 @@ li3.addEventListener("click", ()=>{
     li1.classList.remove("click-on");
     li4.classList.remove("click-on");
     li5.classList.remove("click-on");
-    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday1 + ` ` + date1 +`</h1>
+    container.innerHTML = `<fieldset id="weather-table">
+    <h1>La météo de `+ nomVille +` du `+ longday1 + ` ` + date1 +`</h1>
     <table>
         <tr>
             ${(() => {
@@ -381,7 +455,8 @@ li3.addEventListener("click", ()=>{
                 return tdContent;
             })()}
         </tr>
-    </table>`;
+    </table>
+</fieldset>`;
 });
 
 li4.addEventListener("click", ()=>{
@@ -390,7 +465,8 @@ li4.addEventListener("click", ()=>{
     li3.classList.remove("click-on");
     li1.classList.remove("click-on");
     li5.classList.remove("click-on");
-    container.innerHTML = `<h1>La météo de `+ nomVille +` du `+ longday2 + ` ` + date2 +`</h1>
+    container.innerHTML = `<fieldset id="weather-table">
+    <h1>La météo de `+ nomVille +` du `+ longday2 + ` ` + date2 +`</h1>
     <table>
         <tr>
             ${(() => {
@@ -439,7 +515,8 @@ li4.addEventListener("click", ()=>{
                 return tdContent;
             })()}
         </tr>
-    </table>`;
+    </table>
+</fieldset>`;
 });
 
 li5.addEventListener("click", ()=>{
